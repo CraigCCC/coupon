@@ -3,10 +3,14 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   root 'stores#index'
-  resources :stores, only: [:index, :show]
+  resources :stores, only: [:index, :show] do
+    resources :products, only: [:show]
+  end
 
   namespace :admin do
     root 'stores#index'
-    resources :stores
+    resources :stores do
+      resources :products
+    end
   end
 end
