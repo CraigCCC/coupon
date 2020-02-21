@@ -1,0 +1,11 @@
+<nav>
+  <% if current_user %>
+    <h1>
+      <%= link_to 'AutoPass Test', admin_root_path %>
+      Hello, <%= current_user.username %>
+    </h1>
+    <%= link_to 'To frontend', root_path %>
+    <%= link_to 'Edit account', edit_user_registration_path %>
+    <%= link_to 'Logout', destroy_user_session_path, method: 'delete' %>
+  <% end %>
+</nav>

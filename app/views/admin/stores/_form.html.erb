@@ -1,0 +1,35 @@
+<div>
+  <% if store.errors.any? %>
+    <% store.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  <% end %>
+</div>
+
+<%= form_with model: [:admin, store], local: true do |f| %>
+  <%= f.hidden_field :user_id, value: current_user.id %>
+  <div>
+    <%= f.label :name, '商店名稱' %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :tel, '商店電話' %>
+    <%= f.telephone_field :tel %>
+  </div>
+
+  <div>
+    <%= f.label :address, '商店地址' %>
+    <%= f.text_field :address %>
+  </div>
+
+  <div>
+    <%= f.label :note, '備註' %>
+    <%= f.text_area :note %>
+  </div>
+
+  <div>
+    <%= f.submit %>
+    <%= link_to 'Cancel', admin_stores_path %>
+  </div>
+<% end %>

@@ -1,0 +1,18 @@
+<h1>User Index</h1>
+
+<table>
+  <thead>
+    <th>商店名稱</th>
+    <th>商店電話</th>
+    <th>商店地址</th>
+    <th></th>
+  </thead>
+  <% @stores.each do |store| %>
+    <tbody>
+      <td><%= store.name %></td>
+      <td><%= store.tel %></td>
+      <td><%= store.address %></td>
+      <td><%= link_to '進入商場', store_path(store) %></td>
+    </tbody>
+  <% end %>
+</table>

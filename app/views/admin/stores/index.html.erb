@@ -1,0 +1,27 @@
+<h1>Admin Index</h1>
+
+<h1>
+  商店列表
+  <%= link_to '新增商店', new_admin_store_path%>
+</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th scope='col'>商店名稱</th>
+      <th scope='col'>商店電話</th>
+      <th scope='col'>商店地址</th>
+    </tr>
+  </thead>
+
+  <% @stores.each do |store| %>
+    <tbody>
+      <td><%= store.name %></td>
+      <td><%= store.tel %></td>
+      <td><%= store.address %></td>
+      <td><%= link_to '查看商店', admin_store_path(store) %></td>
+      <td><%= link_to '編輯商店', edit_admin_store_path(store) %></td>
+      <td><%= link_to '刪除商店', admin_store_path(store), method: :delete, data: { confirm: '確定要刪除商店？' } %></td>
+    </tbody>
+  <% end %>
+</table>
