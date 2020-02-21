@@ -1,0 +1,30 @@
+<div>
+  <% if product.errors.any? %>
+    <% product.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  <% end %>
+</div>
+
+<%= form_with model:[:admin, :store, product], local: true do |f| %>
+  <%= f.hidden_field :store_id, value: params[:store_id] %>
+  <div>
+    <%= f.label :title, '商品名稱' %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div>
+    <%= f.label :list_price, '商品價格' %>
+    <%= f.number_field :list_price %>
+  </div>
+
+  <div>
+    <%= f.label :quantity, '商品數量' %>
+    <%= f.number_field :quantity %>
+  </div>
+
+  <div>
+    <%= f.submit %>
+    <%= link_to 'Cancel', admin_store_products_path %>
+  </div>
+<% end %>
