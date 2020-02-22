@@ -4,6 +4,8 @@ class Order < ApplicationRecord
   # relationships
   belongs_to :user
   has_many :order_items
+  has_many :coupon_records
+  has_many :coupons, through: :coupon_records
 
   # callback
   before_save :generate_random_num

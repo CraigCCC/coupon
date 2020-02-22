@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     root 'stores#index'
     resources :stores do
       resources :products
+      resources :coupons
     end
   end
 end
