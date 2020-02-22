@@ -1,8 +1,12 @@
-<h1>Cart</h1>
-<%= link_to '清空購物車', cart_path, method: :delete %>
+<h1>
+  Cart
+  <%= link_to '查看賣場商品', store_path(params[:store_id]) %>
+</h1>
+<%= link_to '清空購物車', store_cart_path(params[:store_id]), method: :delete %>
 <table>
   <thead>
     <tr>
+      <td>商店名稱</td>
       <td>商品名稱</td>
       <td>商品價格</td>
       <td>商品數量</td>
@@ -12,6 +16,7 @@
   <tbody>
     <% current_cart.items.each do |item| %>
       <tr>
+        <td><%= item.product.store.name %></td>
         <td><%= item.product.title %></td>
         <td><%= item.product.list_price %></td>
         <td><%= item.quantity %></td>

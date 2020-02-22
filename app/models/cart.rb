@@ -1,19 +1,20 @@
 class Cart
   SessionKey = :cart88
-  
+
   attr_reader :items
 
   def initialize(items = [])
     @items = items
   end
 
-  def add_item(product_id)
-    found_item = @items.find { |item| item.product_id == product_id }
+  def add_item(store_id, product_id)
+    found_item = @items.find { |item| item.product_id == product_id && item.store_id == store_id}
+
 
     if found_item
       found_item.increment!
     else
-      @items << CartItem.new(product_id)
+      @items << CartItem.new(store_id, product_id)
     end
   end
 
@@ -27,7 +28,7 @@ class Cart
 
   def serialize
     all_items = @items.map { |item|
-      { "product_id" => item.product_id, "quantity" => item.quantity }
+      { "store_id" => item.store_id, "product_id" => item.product_id, "quantity" => item.quantity }
     }
     { "items" => all_items }
   end
@@ -36,7 +37,7 @@ class Cart
     if hash && hash["items"]
       items = []
       hash["items"].each do |item|
-        items << CartItem.new(item["product_id"], item["quantity"])
+        items << CartItem.new(item["store_id"], item["product_id"], item["quantity"])
       end
       Cart.new(items)
     else

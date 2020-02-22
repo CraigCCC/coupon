@@ -1,5 +1,6 @@
 <h1>
   Product List
+  <%= link_to '查看購物車', store_cart_path(params[:id]) %>
 </h1>
 
 <table>
@@ -17,7 +18,7 @@
       <td><%= product.list_price %></td>
       <td><%= product.quantity %></td>
       <td><%= link_to '查看商品', store_product_path(product.store_id, product) %></td>
-      <td><%= link_to '放到購物車', add_cart_path(product), method: 'post'%></td>
+      <td><%= link_to '放到購物車', add_store_cart_path(product.store_id, product), method: 'post'%></td>
     </tbody>
   <% end %>
 </table>

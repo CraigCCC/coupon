@@ -5,11 +5,10 @@ Rails.application.routes.draw do
   root 'stores#index'
   resources :stores, only: [:index, :show] do
     resources :products, only: [:show]
-  end
-
-  resource :cart, only: [:show, :destroy] do
-    collection do
-      post :add, path: 'add/:id'
+    resource :cart, only: [:show, :destroy] do
+      collection do
+        post :add, path: 'add/:id'
+      end
     end
   end
 
