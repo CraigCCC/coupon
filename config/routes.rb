@@ -10,7 +10,10 @@ Rails.application.routes.draw do
         post :add, path: 'add/:id'
       end
     end
+
+    resources :orders, only: [:index, :show, :create]
   end
+
 
   namespace :admin do
     root 'stores#index'

@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   # relationships
   has_many :stores
+  has_many :orders
 
   def username
     email.split('@')[0].capitalize
