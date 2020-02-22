@@ -7,6 +7,12 @@ Rails.application.routes.draw do
     resources :products, only: [:show]
   end
 
+  resource :cart, only: [:show, :destroy] do
+    collection do
+      post :add, path: 'add/:id'
+    end
+  end
+
   namespace :admin do
     root 'stores#index'
     resources :stores do

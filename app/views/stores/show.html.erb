@@ -17,6 +17,7 @@
       <td><%= product.list_price %></td>
       <td><%= product.quantity %></td>
       <td><%= link_to '查看商品', store_product_path(product.store_id, product) %></td>
+      <td><%= link_to '放到購物車', add_cart_path(product), method: 'post'%></td>
     </tbody>
   <% end %>
 </table>
