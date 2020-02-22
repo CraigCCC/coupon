@@ -8,12 +8,12 @@ Rails.application.routes.draw do
     resource :cart, only: [:show, :destroy] do
       collection do
         post :add, path: 'add/:id'
+        get :checkout
       end
     end
-
-    resources :orders, only: [:index, :show, :create]
   end
 
+  resources :orders, only: [:index, :show, :create]
 
   namespace :admin do
     root 'stores#index'

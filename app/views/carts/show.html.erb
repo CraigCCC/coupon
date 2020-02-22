@@ -2,34 +2,9 @@
   Cart
   <%= link_to '查看賣場商品', store_path(params[:store_id]) %>
 </h1>
-<%= link_to '清空購物車', store_cart_path(params[:store_id]), method: :delete %>
-<table>
-  <thead>
-    <tr>
-      <td>商店名稱</td>
-      <td>商品名稱</td>
-      <td>商品價格</td>
-      <td>商品數量</td>
-      <td>小計</td>
-    </tr>
-  </thead>
-  <tbody>
-    <% current_cart.items.each do |item| %>
-      <tr>
-        <td><%= item.product.store.name %></td>
-        <td><%= item.product.title %></td>
-        <td><%= item.product.list_price %></td>
-        <td><%= item.quantity %></td>
-        <td><%= item.price %></td>
-      </tr>
-    <% end %>
-  </tbody>
-  <tfoot>
-  <tr>
-    <td colspan="3">總計</td>
-    <td><%= current_cart.total_price %></td>
-  </tfoot>
-</table>
+<%= link_to '清空購物車', store_cart_path(params[:store_id]), method: :delete if not current_cart.empty? %>
 
-<%= link_to '繼續選購', stores_path, class: "btn btn-default" %>
-<%= link_to '結帳', '#', class: "btn btn-default" %>
+<%= render "cart", cart: current_cart %>
+
+<%= link_to '繼續選購', stores_path %>
+<%= link_to '結帳', checkout_store_cart_path if not current_cart.empty? %>
