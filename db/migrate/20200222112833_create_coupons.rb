@@ -7,6 +7,8 @@ class CreateCoupons < ActiveRecord::Migration[6.0]
       t.decimal :discount_value
       t.integer :total_redemption_type
       t.decimal :total_redemption_value
+      t.integer :people_redemption_type
+      t.decimal :people_redemption_value
       t.integer :effective_date_type
       t.date :effective_start_date
       t.date :effective_end_date

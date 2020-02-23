@@ -10,7 +10,6 @@ class Cart
   def add_item(store_id, product_id)
     found_item = @items.find { |item| item.product_id == product_id && item.store_id == store_id}
 
-
     if found_item
       found_item.increment!
     else
@@ -22,10 +21,18 @@ class Cart
     @items.empty?
   end
 
+  def total_quantity
+    @items.reduce(0){|s, e| s+e.quantity}
+  end
+
   def total_price
     @items.reduce(0) { |sum, item| sum + item.price }
   end
 
+  def shipping_fee
+    60
+  end
+  
   def serialize
     all_items = @items.map { |item|
       { "store_id" => item.store_id, "product_id" => item.product_id, "quantity" => item.quantity }

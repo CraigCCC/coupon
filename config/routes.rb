@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     root 'stores#index'
     resources :stores do
       resources :products
-      resources :coupons
+      resources :coupons, except: [:edit]
     end
   end
 end

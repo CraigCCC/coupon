@@ -1,0 +1,21 @@
+<h1>
+  coupon List
+  <%= link_to '新增折價券', new_admin_store_coupon_path %>
+</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th scope='col'>折價券名稱</th>
+      <th scope='col'></th>
+      <th scope='col'></th>
+    </tr>
+  </thead>
+  <% @coupons.each do |coupon| %>
+    <tbody>
+      <td><%= coupon.name %></td>
+      <td><%= link_to '查看折價券', admin_store_coupon_path(coupon.store_id, coupon) %></td>
+      <td><%= link_to '刪除折價券', admin_store_coupon_path(coupon.store_id, coupon), method: :delete, data: { confirm: '確定要刪除折價券？' } %></td>
+    </tbody>
+  <% end %>
+</table>

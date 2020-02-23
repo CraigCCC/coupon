@@ -2,6 +2,13 @@
 
 <%= render "cart", cart: current_cart %>
 
+---------------------
+使用的是<%=  @store.coupons.find(@discount_max[:coupon_id]).name%>
+---------------------
+<%= @discount_max[:discount] %>
+---------------------
+---------------------
+
 <%= form_with(model: @order) do |form| %>
   <div>
     <%= form.label :recipient, '收件人' %>

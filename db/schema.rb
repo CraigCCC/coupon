@@ -10,10 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_22_054941) do
+ActiveRecord::Schema.define(version: 2020_02_22_124913) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "coupon_records", force: :cascade do |t|
+    t.bigint "coupon_id", null: false
+    t.bigint "order_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["coupon_id"], name: "index_coupon_records_on_coupon_id"
+    t.index ["order_id"], name: "index_coupon_records_on_order_id"
+  end
+
+  create_table "coupons", force: :cascade do |t|
+    t.integer "condition_type"
+    t.decimal "condition_value"
+    t.integer "discount_type"
+    t.decimal "discount_value"
+    t.integer "total_redemption_type"
+    t.decimal "total_redemption_value"
+    t.integer "effective_date_type"
+    t.date "effective_start_date"
+    t.date "effective_end_date"
+    t.integer "effective_quantity"
+    t.bigint "store_id", null: false
+    t.string "product_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
+    t.index ["store_id"], name: "index_coupons_on_store_id"
+  end
 
   create_table "order_items", force: :cascade do |t|
     t.bigint "product_id", null: false
@@ -74,6 +102,9 @@ ActiveRecord::Schema.define(version: 2020_02_22_054941) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "coupon_records", "coupons"
+  add_foreign_key "coupon_records", "orders"
+  add_foreign_key "coupons", "stores"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "users"
