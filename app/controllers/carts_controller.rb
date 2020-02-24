@@ -20,7 +20,7 @@ class CartsController < ApplicationController
     # 存放每張折價券算好後的陣列
     discounts_array = []
     # 找到這間商店的可用 coupons
-    @store_enable_coupons = Store.find(params[:store_id]).coupons.where(enable: true)
+    @store_enable_coupons = Store.find(params[:store_id]).coupons.available_coupon
     @store_enable_coupons.each do |coupon|
 
       # 特定商品 滿件數 折金額或趴數
