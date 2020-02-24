@@ -29,8 +29,8 @@ class Cart
     @items.reduce(0) { |sum, item| sum + item.price }
   end
 
-  def shipping_fee(shipping_value = 60)
-    shipping_value
+  def total_shipping_fee
+    @items.map { |item| item.product.shipping_fee }.max
   end
 
   def serialize

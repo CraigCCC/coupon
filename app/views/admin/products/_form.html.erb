@@ -24,6 +24,11 @@
   </div>
 
   <div>
+    <%= f.label :shipping_fee, '商品運費' %>
+    <%= f.number_field :shipping_fee %>
+  </div>
+
+  <div>
     <%= f.submit %>
     <%= link_to 'Cancel', admin_store_products_path %>
   </div>

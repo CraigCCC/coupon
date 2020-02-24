@@ -15,13 +15,12 @@ class CartsController < ApplicationController
 
     current_cart
     # CouponService.new(current_cart, @store).calculate_money
-    
+
     # Coupon Logic
     # 存放每張折價券算好後的陣列
     discounts_array = []
     # 找到這間商店的可用 coupons
     @store_enable_coupons = Store.find(params[:store_id]).coupons.where(enable: true)
-
     @store_enable_coupons.each do |coupon|
       
       # 特定商品 滿件數 折金額或趴數
@@ -34,11 +33,12 @@ class CartsController < ApplicationController
                 discount = current_cart.total_price - coupon.discount_value
               when 'dis_percent'
                 discount = current_cart.total_price * coupon.discount_value / 10
+              when 'free_shipping'
+                discount = current_cart.total_shipping_fee
               end
               discounts_array.push({
                 coupon_id: coupon.id,
                 discount: discount
-                # shipping_fee: shipping_fee
               })
             end
           end
@@ -53,14 +53,11 @@ class CartsController < ApplicationController
         when 'dis_percent'
           discount = current_cart.total_price * coupon.discount_value / 10
         when 'free_shipping'
-          # discount = 0
-          # shipping_fee = current_cart.shipping_fee(0)
-        else
+          discount = current_cart.total_shipping_fee
         end
         discounts_array.push({
           coupon_id: coupon.id,
           discount: discount
-          # shipping_fee: shipping_fee
         })
       end
 
@@ -72,8 +69,7 @@ class CartsController < ApplicationController
         when 'dis_percent'
           discount = current_cart.total_price * coupon.discount_value / 10
         when 'free_shipping'
-          # discount = 0
-          # shipping_fee = current_cart.shipping_fee(0)
+          discount = current_cart.total_shipping_fee
         else
         end
         discounts_array.push({
@@ -94,6 +90,10 @@ class CartsController < ApplicationController
     end
 
     @discount_max
+    # 找出最優惠的折扣券
+    # 找出後在訂單上打折，做出中間的表
+
+    
   end
 
   def destroy
