@@ -1,4 +1,4 @@
-<h1>New Store</h1>
+<h1>New Coupon</h1>
 
 <div>
   <% if @coupon.errors.any? %>
@@ -13,6 +13,13 @@
   <div>
     <%= f.label :name, '折價券名稱' %>
     <%= f.text_field :name %>
+  </div>
+
+  <div>
+      <%= f.label :product, '特定商品折扣'%>
+      <%= f.select :product_id,
+        options_from_collection_for_select(@products, "id", "title"),
+        { include_blank: '未指定' } %>
   </div>
 
   <div>

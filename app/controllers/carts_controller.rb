@@ -13,14 +13,39 @@ class CartsController < ApplicationController
     # @store = Store.find(params[:store_id])
     @order = Order.new
 
-      
     current_cart
-
     # CouponService.new(current_cart, @store).calculate_money
+    
+    # Coupon Logic
+    # 存放每張折價券算好後的陣列
     discounts_array = []
-    @store = Store.find(params[:store_id])
-    @store.coupons.each do |coupon|
-      # byebug
+    # 找到這間商店的可用 coupons
+    @store_enable_coupons = Store.find(params[:store_id]).coupons.where(enable: true)
+
+    @store_enable_coupons.each do |coupon|
+      
+      # 特定商品 滿件數 折金額或趴數
+      if coupon.product_id?
+        current_cart.items.each do |item|
+          if item.haved_coupon?(coupon)
+            if coupon.full_number? && item.quantity >= coupon.condition_value
+              case coupon.discount_type
+              when 'dis_amount'
+                discount = current_cart.total_price - coupon.discount_value
+              when 'dis_percent'
+                discount = current_cart.total_price * coupon.discount_value / 10
+              end
+              discounts_array.push({
+                coupon_id: coupon.id,
+                discount: discount
+                # shipping_fee: shipping_fee
+              })
+            end
+          end
+        end
+      end
+
+      # 訂單滿件數，折金額或趴數免運費
       if coupon.full_number? && current_cart.total_quantity >= coupon.condition_value
         case coupon.discount_type
         when 'dis_amount'
@@ -28,35 +53,42 @@ class CartsController < ApplicationController
         when 'dis_percent'
           discount = current_cart.total_price * coupon.discount_value / 10
         when 'free_shipping'
+          # discount = 0
+          # shipping_fee = current_cart.shipping_fee(0)
         else
         end
         discounts_array.push({
           coupon_id: coupon.id,
           discount: discount
+          # shipping_fee: shipping_fee
         })
       end
-      if coupon.full_amount? && current_cart.total_price >= coupon.condition_value
+
+      # 訂單滿金額，折金額或趴數
+      if coupon.full_amount? && current_cart.total_price > coupon.condition_value
         case coupon.discount_type
         when 'dis_amount'
           discount = current_cart.total_price - coupon.discount_value
         when 'dis_percent'
           discount = current_cart.total_price * coupon.discount_value / 10
         when 'free_shipping'
+          # discount = 0
+          # shipping_fee = current_cart.shipping_fee(0)
         else
         end
         discounts_array.push({
           coupon_id: coupon.id,
           discount: discount
+          # free_shipping: free_shipping
         })
       end
-      # byebug
-      # @discounts_array
+
     end
 
-    # @cart.total_price
+    # 訂單滿Ｘ折Ｙ，選取最優惠的一張折抵
     max = {discount: 0}
     discounts_array.each do |h|
-      if max[:discount] < h[:discount]
+      if max[:discount] <= h[:discount]
         @discount_max = h
       end
     end

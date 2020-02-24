@@ -19,7 +19,9 @@ Rails.application.routes.draw do
     root 'stores#index'
     resources :stores do
       resources :products
-      resources :coupons, except: [:edit]
+      resources :coupons, except: [:edit] do
+        patch :enable
+      end
     end
   end
 end

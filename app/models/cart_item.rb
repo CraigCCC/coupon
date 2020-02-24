@@ -18,4 +18,8 @@ class CartItem
   def price
     @quantity * product.list_price
   end
+
+  def haved_coupon?(coupon)
+    @product_id.include?(coupon.product_id) && @store_id.include?(coupon.store_id.to_s)
+  end
 end

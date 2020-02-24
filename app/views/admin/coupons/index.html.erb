@@ -7,6 +7,7 @@
   <thead>
     <tr>
       <th scope='col'>折價券名稱</th>
+      <th scope='col'>是否啟用</th>
       <th scope='col'></th>
       <th scope='col'></th>
     </tr>
@@ -14,6 +15,8 @@
   <% @coupons.each do |coupon| %>
     <tbody>
       <td><%= coupon.name %></td>
+      <td><%= coupon.enable %></td>
+      <td><%= link_to '更改折價券狀態', admin_store_coupon_enable_path(coupon.store_id, coupon), method: :patch %></td>
       <td><%= link_to '查看折價券', admin_store_coupon_path(coupon.store_id, coupon) %></td>
       <td><%= link_to '刪除折價券', admin_store_coupon_path(coupon.store_id, coupon), method: :delete, data: { confirm: '確定要刪除折價券？' } %></td>
     </tbody>

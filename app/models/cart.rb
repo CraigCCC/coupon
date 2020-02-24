@@ -22,17 +22,17 @@ class Cart
   end
 
   def total_quantity
-    @items.reduce(0){|s, e| s+e.quantity}
+    @items.reduce(0){|sum, item| sum + item.quantity}
   end
 
   def total_price
     @items.reduce(0) { |sum, item| sum + item.price }
   end
 
-  def shipping_fee
-    60
+  def shipping_fee(shipping_value = 60)
+    shipping_value
   end
-  
+
   def serialize
     all_items = @items.map { |item|
       { "store_id" => item.store_id, "product_id" => item.product_id, "quantity" => item.quantity }

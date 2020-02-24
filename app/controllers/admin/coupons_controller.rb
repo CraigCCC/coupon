@@ -5,7 +5,7 @@ class Admin::CouponsController < ApplicationController
 
   def index
     @store = Store.find(params[:store_id])
-    @coupons = @store.coupons
+    @coupons = @store.coupons.order(created_at: 'asc')
   end
 
   def show
@@ -13,6 +13,7 @@ class Admin::CouponsController < ApplicationController
 
   def new
     @coupon= Coupon.new
+    @products = Store.find(params[:store_id]).products
   end
 
   def create
@@ -30,6 +31,16 @@ class Admin::CouponsController < ApplicationController
     else
       render :new
     end
+  end
+
+  def enable
+    coupon = Coupon.find(params[:coupon_id])
+    if coupon.enable
+      coupon.update(enable: false)
+    else
+      coupon.update(enable: true)
+    end
+    redirect_to admin_store_coupons_path
   end
 
   def destroy
