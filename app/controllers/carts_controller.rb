@@ -22,7 +22,7 @@ class CartsController < ApplicationController
     # 找到這間商店的可用 coupons
     @store_enable_coupons = Store.find(params[:store_id]).coupons.where(enable: true)
     @store_enable_coupons.each do |coupon|
-      
+
       # 特定商品 滿件數 折金額或趴數
       if coupon.product_id?
         current_cart.items.each do |item|
@@ -35,6 +35,8 @@ class CartsController < ApplicationController
                 discount = current_cart.total_price * coupon.discount_value / 10
               when 'free_shipping'
                 discount = current_cart.total_shipping_fee
+              when 'dis_given_product'
+                discount = Product.find(coupon.given_product).list_price
               end
               discounts_array.push({
                 coupon_id: coupon.id,
@@ -54,6 +56,8 @@ class CartsController < ApplicationController
           discount = current_cart.total_price * coupon.discount_value / 10
         when 'free_shipping'
           discount = current_cart.total_shipping_fee
+        when 'dis_given_product'
+          discount = Product.find(coupon.given_product).list_price
         end
         discounts_array.push({
           coupon_id: coupon.id,
@@ -61,7 +65,7 @@ class CartsController < ApplicationController
         })
       end
 
-      # 訂單滿金額，折金額或趴數
+      # 訂單滿金額，折金額、趴數、免運費、贈送商品
       if coupon.full_amount? && current_cart.total_price > coupon.condition_value
         case coupon.discount_type
         when 'dis_amount'
@@ -70,12 +74,12 @@ class CartsController < ApplicationController
           discount = current_cart.total_price * coupon.discount_value / 10
         when 'free_shipping'
           discount = current_cart.total_shipping_fee
-        else
+        when 'dis_given_product'
+          discount = Product.find(coupon.given_product).list_price
         end
         discounts_array.push({
           coupon_id: coupon.id,
           discount: discount
-          # free_shipping: free_shipping
         })
       end
 
@@ -93,7 +97,6 @@ class CartsController < ApplicationController
     # 找出最優惠的折扣券
     # 找出後在訂單上打折，做出中間的表
 
-    
   end
 
   def destroy
@@ -101,7 +104,6 @@ class CartsController < ApplicationController
     redirect_to stores_path, notice: "購物車已清空"
   end
 end
-
 
 # arr = [{
 #   coupon_id: 1,

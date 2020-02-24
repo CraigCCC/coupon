@@ -43,22 +43,21 @@
 
     <%= f.radio_button :discount_type, 'dis_percent' %>
     <%= f.label :discount_type, '折折數', value: 'dis_percent' %>
-
     <%= f.number_field :discount_value %>
+
     <%= f.radio_button :discount_type, 'free_shipping' %>
-
     <%= f.label :discount_type, '免運費', value: 'free_shipping' %>
-    <%= f.radio_button :discount_type, 'dis_gift' %>
-
-    <%= f.label :discount_type, '贈送商品', value: 'dis_gift' %>
-    <%= f.select :gift_product,
+    
+    <%= f.radio_button :discount_type, 'dis_given_product' %>
+    <%= f.label :discount_type, '贈送商品', value: 'dis_given_product' %>
+    <%= f.select :given_product,
         options_from_collection_for_select(@products, "id", "title"),
         { include_blank: '未指定' } %>
   </div>
   <br>
   折扣券贖回限制設定
   <div>
-    <%= f.label :total_redemption_type, '折扣券總共贖回：' %>
+    <%= f.label :total_redemption_type, '折扣券總共：' %>
 
     <%= f.radio_button :total_redemption_type, 'total_default', checked: true %>
     <%= f.label :total_redemption_type, '無限制', value: 'total_default' %>
@@ -73,7 +72,7 @@
   </div>
 
   <div>
-    <%= f.label :people_redemption_type, '折扣券每人贖回：' %>
+    <%= f.label :people_redemption_type, '折扣券每人：' %>
 
     <%= f.radio_button :people_redemption_type, 'people_default', checked: true  %>
     <%= f.label :people_redemption_type, '無限制', value: 'people_default' %>

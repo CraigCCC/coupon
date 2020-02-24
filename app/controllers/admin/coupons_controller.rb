@@ -69,6 +69,7 @@ class Admin::CouponsController < ApplicationController
                                     :effective_end_date,
                                     :effective_quantity,
                                     :store_id,
-                                    :product_id])
+                                    :product_id,
+                                    :given_product])
   end
 end
