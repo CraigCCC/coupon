@@ -9,7 +9,8 @@
 ---------------------
 ---------------------
 
-<%= form_with(model: @order) do |form| %>
+<%= form_with(model: [:store, @order]) do |form| %>
+  <%= form.hidden_field :coupon_id, value: @discount_max[:coupon_id]%>
   <div>
     <%= form.label :recipient, '收件人' %>
     <%= form.text_field :recipient, class: 'input' %>

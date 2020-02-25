@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_24_104334) do
+ActiveRecord::Schema.define(version: 2020_02_25_101139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2020_02_24_104334) do
     t.bigint "order_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "userful", default: true
+    t.boolean "useful", default: true
     t.decimal "best_discount"
     t.index ["coupon_id"], name: "index_coupon_records_on_coupon_id"
     t.index ["order_id"], name: "index_coupon_records_on_order_id"
@@ -33,19 +33,18 @@ ActiveRecord::Schema.define(version: 2020_02_24_104334) do
     t.decimal "discount_value"
     t.integer "total_redemption_type"
     t.decimal "total_redemption_value"
-    t.integer "effective_date_type"
     t.date "effective_start_date"
     t.date "effective_end_date"
-    t.integer "effective_quantity"
     t.bigint "store_id", null: false
     t.string "product_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "name"
-    t.boolean "enable", default: false
+    t.boolean "with_enable", default: false
     t.string "given_product"
     t.integer "people_redemption_type"
     t.decimal "people_redemption_value"
+    t.boolean "month_reset", default: false
     t.index ["store_id"], name: "index_coupons_on_store_id"
   end
 

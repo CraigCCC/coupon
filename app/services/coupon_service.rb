@@ -6,20 +6,14 @@ class CouponService
   end
 
   def find_best_discount_coupon
+
     # 存放每張折價券算好後的陣列
     discounts_array = []
     # 找到這間商店的可用 coupons
     @store_enable_coupons.each do |coupon|
 
-      # case coupon.total_redemption_type
-      # when 'total_default'
-      # when 'total_rede_amount'
-      #   if coupon.total_redmption_value > coupon.coupon_records.where()
-
-      # when 'total_rede_num'
-      #   if coupon.total_redmption_value > coupon.coupon_records.where(userful: false) + 1
-      # end
-      # next unless is_ok?
+      # 判斷折扣券的使用次數、金額限制
+      # next unless is_redemption?(coupon)
 
       # 特定商品 滿件數 折金額、趴數、免運費、贈送商品
       if coupon.product_id?
@@ -42,9 +36,10 @@ class CouponService
         discount_type_to_caculate(coupon, discounts_array)
       end
     end
+
     # 選取最優惠的一張折抵
     discount_max = discounts_array.max { |a, b| a[:discount] <=> b[:discount] }
-    
+
     # 找出最優惠的折扣券
     # 找出後在訂單上打折，做出中間的表
   end
@@ -62,19 +57,30 @@ class CouponService
     when 'dis_given_product'
       discount = Product.find(coupon.given_product).list_price
     end
+
     discounts_array.push({
       coupon_id: coupon.id,
       discount: discount
-    })
-    # arr = [{
-    #   coupon_id: 1,
-    #   discount: 200
-    # },{
-    #   coupon_id: 2,
-    #   discount: 500
-    # },{
-    #   coupon_id: 3,
-    #   discount: 100
-    # }]
+    })# arr = [{ coupon_id: 1, discount: 200 }]
   end
+
+  # def is_redmption?(coupon)
+  #   # 總共
+  #   case coupon.total_redemption_type
+  #   when 'total_default'
+  #   when 'total_rede_amount'
+  #     if coupon.total_redmption_value > coupon.coupon_records.where()
+  #   when 'total_rede_num'
+  #     if coupon.total_redmption_value > coupon.coupon_records.where(userful: false) + 1
+  #   end
+
+  #   # 每人
+  #   case coupon.people_redemption_type
+  #   when 'people_default'
+  #   when 'people_rede_amount'
+  #     if coupon.people_redmption_value > coupon.coupon_records.where()
+  #   when 'people_rede_num'
+  #     if coupon.people_redmption_value > coupon.coupon_records.where(userful: false) + 1
+  #   end
+  # end
 end

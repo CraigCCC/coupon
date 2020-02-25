@@ -10,13 +10,12 @@ class Coupon < ApplicationRecord
   enum discount_type: [:dis_amount, :dis_percent, :free_shipping, :dis_given_product]
   enum total_redemption_type: [:total_default, :total_rede_amount, :total_rede_num]
   enum people_redemption_type: [:people_default, :people_rede_amount, :people_rede_num]
-  enum effective_date_type: [:date_default, :date_range, :month_reset]
 
   # scopes
 
   # class methods
   def self.available
-    available_time.where(enable: true)
+    available_time.where(with_enable: true)
   end
 
   def self.available_time

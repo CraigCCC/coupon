@@ -11,9 +11,8 @@ Rails.application.routes.draw do
         get :checkout
       end
     end
+    resources :orders, only: [:index, :show, :create]
   end
-
-  resources :orders, only: [:index, :show, :create]
 
   namespace :admin do
     root 'stores#index'
