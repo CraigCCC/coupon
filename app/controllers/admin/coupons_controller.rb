@@ -20,13 +20,6 @@ class Admin::CouponsController < ApplicationController
     @coupon = Coupon.new(params_coupon)
 
     if @coupon.save
-      puts '-------------------'
-      puts '-------------------'
-      puts '-------------------'
-      puts params
-      puts '-------------------'
-      puts '-------------------'
-      puts '-------------------'
       redirect_to admin_store_coupons_path, notice: '新增 coupon 成功'
     else
       render :new

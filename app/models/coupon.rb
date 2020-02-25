@@ -13,5 +13,14 @@ class Coupon < ApplicationRecord
   enum effective_date_type: [:date_default, :date_range, :month_reset]
 
   # scopes
-  scope :available_coupon, -> { where(enable: true).where('effective_start_date <= ? AND effective_end_date >= ?', DateTime.now.to_date, DateTime.now.to_date ) }
+
+  # class methods
+  def self.available
+    available_time.where(enable: true)
+  end
+
+  def self.available_time
+    now = DateTime.now.to_date
+    where('(effective_start_date <= ? AND effective_end_date >= ?) OR ( effective_start_date IS NULL AND effective_end_date IS NULL)', now, now)
+  end
 end

@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 2020_02_24_104334) do
     t.bigint "order_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "userful", default: true
+    t.decimal "best_discount"
     t.index ["coupon_id"], name: "index_coupon_records_on_coupon_id"
     t.index ["order_id"], name: "index_coupon_records_on_order_id"
   end
@@ -44,8 +46,6 @@ ActiveRecord::Schema.define(version: 2020_02_24_104334) do
     t.string "given_product"
     t.integer "people_redemption_type"
     t.decimal "people_redemption_value"
-    t.boolean "userful", default: true
-    t.decimal "best_discount"
     t.index ["store_id"], name: "index_coupons_on_store_id"
   end
 
