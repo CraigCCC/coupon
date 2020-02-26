@@ -39,7 +39,7 @@ class Order < ApplicationRecord
     loop do
       self.num = SecureRandom.hex(6)
       self.serial_number = SecureRandom.hex(10)
-      break unless Order.where(num: self.num,serial_number: self.serial_number ).exists?
+      break unless Order.where(num: self.num,serial_number: self.serial_number).exists?
     end
   end
 end

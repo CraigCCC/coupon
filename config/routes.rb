@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     resources :stores do
       resources :products
       resources :coupons, except: [:edit] do
-        patch :enable
+        patch :with_enable
       end
     end
   end

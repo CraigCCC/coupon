@@ -26,12 +26,12 @@ class Admin::CouponsController < ApplicationController
     end
   end
 
-  def enable
+  def with_enable
     coupon = Coupon.find(params[:coupon_id])
-    if coupon.enable
-      coupon.update(enable: false)
+    if coupon.with_enable
+      coupon.update(with_enable: false)
     else
-      coupon.update(enable: true)
+      coupon.update(with_enable: true)
     end
     redirect_to admin_store_coupons_path
   end

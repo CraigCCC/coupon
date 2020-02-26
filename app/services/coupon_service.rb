@@ -6,12 +6,10 @@ class CouponService
   end
 
   def find_best_discount_coupon
-
     # 存放每張折價券算好後的陣列
     discounts_array = []
     # 找到這間商店的可用 coupons
     @store_enable_coupons.each do |coupon|
-
       # 判斷折扣券的使用次數、金額限制
       # next unless is_redemption?(coupon)
 
@@ -39,7 +37,6 @@ class CouponService
 
     # 選取最優惠的一張折抵
     discount_max = discounts_array.max { |a, b| a[:discount] <=> b[:discount] }
-
     # 找出最優惠的折扣券
     # 找出後在訂單上打折，做出中間的表
   end
@@ -51,9 +48,9 @@ class CouponService
     when 'dis_amount'
       discount = coupon.discount_value
     when 'dis_percent'
-      discount = current_cart.total_price * (1 - coupon.discount_value / 10)
+      discount = @cart.total_price * (1 - coupon.discount_value / 10)
     when 'free_shipping'
-      discount = current_cart.total_shipping_fee
+      discount = @cart.total_shipping_fee
     when 'dis_given_product'
       discount = Product.find(coupon.given_product).list_price
     end
@@ -64,23 +61,26 @@ class CouponService
     })# arr = [{ coupon_id: 1, discount: 200 }]
   end
 
-  # def is_redmption?(coupon)
-  #   # 總共
-  #   case coupon.total_redemption_type
-  #   when 'total_default'
-  #   when 'total_rede_amount'
-  #     if coupon.total_redmption_value > coupon.coupon_records.where()
-  #   when 'total_rede_num'
-  #     if coupon.total_redmption_value > coupon.coupon_records.where(userful: false) + 1
-  #   end
+  # (WIP)
+  # def is_redemption?(coupon)
+    # 總共
+    # case coupon.total_redemption_type
+    # when 'total_default'
+    #   return true
+    # when 'total_rede_amount'
+    #   return coupon.total_redemption_value > CouponRecord.where(coupon_id: coupon.id).sum(:best_discount)
+    # when 'total_rede_num'
+    #   return coupon.total_redemption_value > coupon.coupon_records.where(need_count: true).count + 1
+    # end
 
-  #   # 每人
-  #   case coupon.people_redemption_type
-  #   when 'people_default'
-  #   when 'people_rede_amount'
-  #     if coupon.people_redmption_value > coupon.coupon_records.where()
-  #   when 'people_rede_num'
-  #     if coupon.people_redmption_value > coupon.coupon_records.where(userful: false) + 1
-  #   end
+
+    # 每人
+    # case coupon.people_redemption_type
+    # when 'people_default'
+    #   return true
+    # when 'people_rede_amount'
+    #   return 
+    # when 'people_rede_num'
+    # end
   # end
 end

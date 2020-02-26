@@ -11,16 +11,13 @@ class CartsController < ApplicationController
 
   def checkout
     # @store = Store.find(params[:store_id])
-    @order = Order.new(@discount_max)
-    
+    @order = Order.new
+
     # 找出可用折扣券
     store_available_coupons = Store.find(params[:store_id]).coupons.available
 
     # 找出最優惠的折扣券
     @discount_max = CouponService.new(current_cart, store_available_coupons).find_best_discount_coupon
-
-    # 找出後在訂單上打折，做出中間的表
-
   end
 
   def destroy

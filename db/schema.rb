@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2020_02_25_101139) do
     t.bigint "order_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "useful", default: true
+    t.boolean "need_count", default: true
     t.decimal "best_discount"
     t.index ["coupon_id"], name: "index_coupon_records_on_coupon_id"
     t.index ["order_id"], name: "index_coupon_records_on_order_id"

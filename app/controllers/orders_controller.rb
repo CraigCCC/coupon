@@ -14,11 +14,12 @@ class OrdersController < ApplicationController
     # 找出最優惠的折扣券
     discount_max = CouponService.new(current_cart, store_available_coupons).find_best_discount_coupon
 
+    # 找出後在訂單上打折，做出中間的表
     if params[:coupon_id] = discount_max[:coupon_id]
       coupon = Coupon.find(discount_max[:coupon_id])
       coupon.coupon_records.build(order: @order,
-                                  useful: false,
-                                  best_discount: discount_max[:coupon_id] )
+                                  need_count: true,
+                                  best_discount: discount_max[:discount] )
     end
 
     if @order.save && coupon.save

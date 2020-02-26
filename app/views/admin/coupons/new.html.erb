@@ -86,25 +86,18 @@
     <%= f.number_field :people_redemption_value %>
   </div>
 
-
-
   <br>
   折扣券時效設定
   <div>
-    <%= f.label :effective_date_type, '有效區間：' %>
-
-    <%= f.radio_button :effective_date_type, 'date_default', checked: true %>
-    <%= f.label :effective_date_type, '無限制', value: 'date_default' %>
-
-    <%= f.radio_button :effective_date_type, 'date_range' %>
-    <%= f.label :effective_date_type, '限制', value: 'date_range' %>
-
+    有效區間：
     <%= f.label :effective_start_date, '開始日期' %>
     <%= f.date_field :effective_start_date %>
     <%= f.label :effective_end_date, '結束日期' %>
     <%= f.date_field :effective_end_date %>
   </div>
-
+  <div>
+    每月重新計算使用數量
+  </div>
   <div>
     <%= f.submit %>
     <%= link_to 'Cancel', admin_store_coupons_path %>

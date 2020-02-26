@@ -3,14 +3,13 @@
 <%= render "cart", cart: current_cart %>
 
 ---------------------
-使用的是<%#=  @store.coupons.find(@discount_max[:coupon_id]).name%>
 ---------------------
-<%= @discount_max[:discount] %>
+<%= @discount_max[:discount] if @discount_max.present?%>
 ---------------------
 ---------------------
 
 <%= form_with(model: [:store, @order]) do |form| %>
-  <%= form.hidden_field :coupon_id, value: @discount_max[:coupon_id]%>
+  <%= form.hidden_field :coupon_id, value: @discount_max[:coupon_id] if @discount_max.present?%>
   <div>
     <%= form.label :recipient, '收件人' %>
     <%= form.text_field :recipient, class: 'input' %>
