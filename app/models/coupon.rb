@@ -19,7 +19,7 @@ class Coupon < ApplicationRecord
   end
 
   def self.available_time
-    now = DateTime.now.to_date
+    now = DateTime.current
     where('(effective_start_date <= ? AND effective_end_date >= ?) OR ( effective_start_date IS NULL AND effective_end_date IS NULL)', now, now)
   end
 end
